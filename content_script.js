@@ -1,1 +1,2 @@
-alert("content script")
+var searchBox = document.getElementById("searchboxinput");
+searchBox.value = "Foo";
