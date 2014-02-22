@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+
+    "name": "Maps Station Checker",
+    "description": "A Chrome extension that checks the accuracy of Google Maps station locations.",
+    "version": "1.0",
+
+    "permissions": [
+        "tabs",
+        "https://www.google.co.uk/maps/"
+    ],
+
+    "background": {
+        "scripts": ["eventPage.js"],
+        "persistent": false
+    },
+
+    "browser_action": {
+        "default_icon": "icon.png",
+    }
+}
