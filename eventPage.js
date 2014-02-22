@@ -1,15 +1,21 @@
-var mapsTabId = null;
+var nextMapsTabId = null;
 
 chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.tabs.create({
         'url': "https://www.google.co.uk/maps/"
-    }, function(tab) {
-    	mapsTabId = tab.id;
+    }, function onTabCreated(tab) {
+        nextMapsTabId = tab.id;
+        chrome.tabs.onUpdated.addListener(onTabLoaded);
     });
 });
 
-chrome.tabs.onUpdated.addListener(function(tabId , info) {
-    if (mapsTabId !== null && tabId === mapsTabId && info.status === "complete") {
-        // your code ...
+function onTabLoaded(tabId , info) {
+    if (nextMapsTabId !== null && tabId === nextMapsTabId && info.status === "complete") {
+        // Google Maps has loaded, do something!
+
+        // Only run the code below once per click of browser action button.
+        chrome.tabs.onUpdated.removeListener(onTabLoaded);
+
+        alert("HELLO!");
     }
-});
+}
