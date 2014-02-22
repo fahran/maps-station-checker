@@ -10,7 +10,12 @@ stationsCsv.split('\n').forEach(function(csvLine, i) {
     });
 });
 
-console.log(stations);
-
 var searchBox = document.getElementById("searchboxinput");
-searchBox.value = "Foo";
+var searchButton = document.querySelector("#searchbox > .searchbutton")
+
+stations.forEach(function(station, i) {
+    if (i != 0) return;
+    searchBox.value = station.name + " station";
+    searchButton.click();
+});
+
