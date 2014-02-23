@@ -10,12 +10,38 @@ stationsCsv.split('\n').forEach(function(csvLine, i) {
     });
 });
 
+var results = [];
+var nextIndex = 0;
+
 var searchBox = document.getElementById("searchboxinput");
 var searchButton = document.querySelector("#searchbox > .searchbutton")
 
-stations.forEach(function(station, i) {
-    if (i != 0) return;
+function searchForStation(station) {
+    searchBox.focus();
     searchBox.value = station.name + " station";
-    searchButton.click();
-});
+    searchBox.blur();
+    setTimeout(function() {
+        searchButton.click();
+        scheduleGatherResults();
+    }, 0);
+}
 
+function scheduleGatherResults() {
+    setTimeout(function() {
+        var result = {
+            name: stations[nextIndex-1].name,
+            url: location.href
+        };
+        results.push(result);
+        console.log(result.name + " => " + result.url);
+        if (nextIndex < stations.length)
+            searchForStation(stations[nextIndex++]);
+    }, 2000);
+}
+
+// Start the search (initially, there is no result to gather).
+setTimeout(function() {
+    searchForStation(stations[nextIndex++]);
+}, 2000);
+
+// TODO: Analyse |results|.
